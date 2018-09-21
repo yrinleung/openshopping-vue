@@ -6,7 +6,7 @@
 ## 特性
 - 开箱即用，集成后台接口格式，前端可做二次开发以实现自有业务
 - 首页是由图片广告、图文导航、商品、公告、搜索、文本、标题、辅助空白、辅助线、方格等组件根据后端接口数据动态渲染，可根据后端返回的数据渲染出N种首页效果
-- 定制主题【未完成】
+- 定制主题
 
 ## 手机预览
 
@@ -14,15 +14,11 @@
 
 ![](./docs/static/qrcode.png)
 
-<img src="./docs/static/index.png " width="290" />
-<img src="./docs/static/category.png " width="290" />
-<img src="./docs/static/product_list.png " width="290" />
-<img src="./docs/static/product_detail.png " width="290" />
-<img src="./docs/static/card.png " width="290" />
-<img src="./docs/static/submit_order.png " width="290" />
-<img src="./docs/static/order_list.png " width="290" />
-<img src="./docs/static/order_info.png " width="290" />
-<img src="./docs/static/login.png " width="290" />
+![](./docs/static/show1.jpg)
+
+![](./docs/static/show2.jpg)
+
+![](./docs/static/show3.jpg)
 
 
 ## 技术栈
@@ -57,6 +53,7 @@ dataSources：数据源(local=本地)
 ## 进度
 - [x] 界面样式
 - [ ] 数据通过接口绑定
+- [ ] 定制主题
 - [ ] 代码重构优化
 
 ## 页面
