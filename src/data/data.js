@@ -20,6 +20,7 @@ export default {
 
     '/User/GetUserIndex':GetUserIndex,
     '/User/GetFavorite':GetFavorite,
+    '/User/DelFavorite':success,
     
     '/User/GetAddressList':GetAddressList,
     '/User/GetAddressById':GetAddressById,

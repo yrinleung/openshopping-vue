@@ -15,6 +15,14 @@ export function GetFavorite(){
   })
 }
 
+export function DelFavorite(id){
+  return request({
+    url: '/User/DelFavorite',
+    method: 'get',
+    params: { id:id }
+  })
+}
+
 export function GetAddressList(){
   return request({
     url: '/User/GetAddressList',

@@ -7,9 +7,9 @@
         @load="onLoad"
         >
         <div v-for="(item,index) in list" :key="index">
-            <van-swipe-cell :right-width="65" :on-close="onClose">
+            <van-swipe-cell :right-width="65" :on-close="onClose(item)">
                 <product-card :product='item' />
-                    <span slot="right">删除</span>
+                    <span slot="right" >删除</span>
                 </van-swipe-cell>
         </div>
     </van-list>
@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { GetFavorite } from "../../../api/user.js";
+import { GetFavorite ,DelFavorite} from "../../../api/user.js";
 
 export default {
     data(){
@@ -30,23 +30,28 @@ export default {
         }
     },
     methods:{
-        onClose(clickPosition, instance) {
-            switch (clickPosition) {
-                case 'left':
-                case 'cell':
-                case 'outside':
-                instance.close();
-                break;
-                case 'right':
-                this.$dialog.confirm({
-                    message: '确定删除吗？'
-                }).then(() => {
-                    this.$router.go(0);  
+        onClose(item){
+            return function(clickPosition, instance) {
+                switch (clickPosition) {
+                    case 'left':
+                    case 'cell':
+                    case 'outside':
                     instance.close();
-                }).catch(() => {
-                // on cancel
-                });
-                break;
+                    break;
+                    case 'right':
+                        this.$dialog.confirm({
+                            message: '确定删除吗？'
+                        }).then(() => {
+                            DelFavorite(item.id).then(response=>{
+                                this.$toast('删除成功');
+                                this.$router.go(0);  
+                            })
+                            instance.close();
+                        }).catch(() => {
+                        // on cancel
+                        });
+                    break;
+                }
             }
         },
         onLoad() {
