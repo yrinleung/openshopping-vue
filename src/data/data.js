@@ -10,6 +10,7 @@ import GetFavorite from './user/GetFavorite.json'
 import GetAddressList from './user/GetAddressList.json'
 import GetAddressById from './user/GetAddressById.json'
 
+import GetCoupon from './user/GetCoupon.json'
 
 export default {
     '/Page/GetPage':GetPage,
@@ -28,4 +29,6 @@ export default {
     '/User/SaveAddress':success,
     '/User/DelAddress':success,
     
+    '/User/GetCoupon':GetCoupon,
+    '/User/ExchangeCoupon':success,
 }

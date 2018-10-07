@@ -8,10 +8,11 @@ export function GetUserIndex() {
   })
 }
 
-export function GetFavorite(){
+export function GetFavorite(data){
   return request({
     url: '/User/GetFavorite',
-    method: 'get',
+    method: 'post',
+    params: { data }
   })
 }
 
@@ -53,6 +54,22 @@ export function DelAddress(data){
   })
 }
 
+
+export function GetCoupon(data){
+  return request({
+    url: '/User/GetCoupon',
+    method: 'Post',
+    params: { data }
+  })
+}
+
+export function ExchangeCoupon(code){
+  return request({
+    url: '/User/ExchangeCoupon',
+    method: 'Post',
+    params: { code:code }
+  })
+}
 
 
   

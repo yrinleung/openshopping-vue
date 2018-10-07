@@ -5,138 +5,131 @@
         <van-field
             center
             clearable
-            placeholder="请输入短信验证码"
+            placeholder="请输入优惠码"
+            
+            v-model="couponCode"
         >
-            <van-button slot="button" size="small" type="primary">兑换</van-button>
+            <van-button slot="button" size="small" type="primary" :loading="exchangeLoading" @click="onExchange">兑换</van-button>
         </van-field>
         </van-cell-group>
         <van-tabs >
             <van-tab title="未使用">
                 <ul>
-                    <li class="couponitem">
-                        <div class="couponTop">
-                            <div class="cpnamount">
-                                <div class="amountWrap">
-                                    <div class="amount">
-                                            <span class="amountSign">¥</span><span class="amountNum">60</span><!--Regular if10-->                    
-                                    </div>
-                                    <div class="condition">
-                                        <span>无金额门槛</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="couponInfoWrap">
-                                <div class="cpninfo">
-                                    <div class="detail">
-                                    <span class="name">购物车专享优惠券60</span></div>
-                                </div>
-                                <div class="validity">
-                                    <span>2018.09.05-2018.09.28
-                                    </span>
-                                </div>
-                                <van-button type="danger" size="mini">立即使用</van-button>
-                            </div>
-                        </div>
-                        <div class="couponMid ">
-                            <span>指定商品适用</span>
-                            <van-icon name="arrow" class="down" />
-                        </div>
-
-                        <div class="info" >
-                            <div class="text"><span>以下商品适用：<br>SAINT LAURENT PARIS 圣罗兰 ...<br>特例商品不可使用优惠券</span></div>
-                            <div class="text">
-                            </div>
-                        </div>
-                    </li>
-                    <li class="couponitem show">
-                        <div class="couponTop">
-                            <div class="cpnamount">
-                                <div class="amountWrap">
-                                    <div class="amount">
-                                            <span class="amountSign">¥</span><span class="amountNum">60</span><!--Regular if10-->                    
-                                    </div>
-                                    <div class="condition">
-                                        <span>无金额门槛</span>
+                    <van-list
+                            v-model="loading"
+                            :finished="finished"
+                            @load="onLoad"
+                            >
+                        <li  v-for="(item,index) in list" :key="index" :class="'couponitem '+(item.show?'show':'') ">
+                            <div class="couponTop">
+                                <div class="cpnamount">
+                                    <div class="amountWrap">
+                                        <div class="amount">
+                                                <span class="amountSign" v-if="item.SignPosition=='left'" >{{item.Sign}}</span>
+                                                <span class="amountNum">{{item.Coupon}}</span>
+                                                <span class="amountSign" v-if="item.SignPosition=='right'" >{{item.Sign}}</span>                   
+                                        </div>
+                                        <div class="condition">
+                                            <span>{{item.Condition}}</span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="couponInfoWrap">
-                                <div class="cpninfo">
-                                    <div class="detail">
-                                    <span class="name">购物车专享优惠券60</span></div>
+                                <div class="couponInfoWrap">
+                                    <div class="cpninfo">
+                                        <div class="detail">
+                                        <span class="name">{{item.Name}}</span></div>
+                                    </div>
+                                    <div class="validity">
+                                        <span>{{item.BeginDate}}-{{item.EndDate}}
+                                        </span>
+                                    </div>
+                                    <van-button type="danger" size="mini">立即使用</van-button>
                                 </div>
-                                 <div class="validity">
-                                    <span>2018.09.05-2018.09.28
-                                    </span>
+                            </div>
+                            <div class="couponMid " v-if="item.Info!=''">
+                                <span>详细信息</span>
+                                <van-icon name="arrow" class="down" @click="onShowInfo(item.Id,index)" />
+                            </div>
+                            <div class="info"  v-if="item.Info!=''" >
+                                <div class="text">
+                                    {{item.Info}}
                                 </div>
-                                <van-button type="danger" size="mini">立即使用</van-button>
                             </div>
-                        </div>
-                        <div class="couponMid ">
-                            <span>指定商品适用</span>
-                            <van-icon name="arrow" class="down" />
-                        </div>
-
-                        <div class="info" >
-                            <div class="text"><span>以下商品适用：<br>SAINT LAURENT PARIS 圣罗兰 ...<br>特例商品不可使用优惠券</span></div>
-                            <div class="text">
-                            </div>
-                        </div>
-                    </li>
+                        </li>
+                    </van-list>
                 </ul>
             </van-tab>
             <van-tab title="使用记录">
                 <ul class="gray" >
-                    <li class="couponitem">
-                        <div class="couponTop">
-                            <div class="cpnamount">
-                                <div class="amountWrap">
-                                    <div class="amount">
-                                            <span class="amountSign">¥</span><span class="amountNum">60</span><!--Regular if10-->                    
-                                    </div>
-                                    <div class="condition">
-                                        <span>无金额门槛</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="couponInfoWrap">
-                                <div class="cpninfo">
-                                    <div class="detail">
-                                    <span class="name">购物车专享优惠券60</span></div>
-                                </div>
-                                        <div class="validity">
-                                            <span>2018.09.05-2018.09.28</span>
+                    <van-list
+                            v-model="useLoading"
+                            :finished="useFinished"
+                            @load="onLoadUse"
+                            >
+                        <li  v-for="(item,index) in useList" :key="index" class="couponitem">
+                            <div class="couponTop">
+                                <div class="cpnamount">
+                                    <div class="amountWrap">
+                                        <div class="amount">
+                                                <span class="amountSign" v-if="item.SignPosition=='left'" >{{item.Sign}}</span>
+                                                <span class="amountNum">{{item.Coupon}}</span>
+                                                <span class="amountSign" v-if="item.SignPosition=='right'" >{{item.Sign}}</span>                   
                                         </div>
+                                        <div class="condition">
+                                            <span>{{item.Condition}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="couponInfoWrap">
+                                    <div class="cpninfo">
+                                        <div class="detail">
+                                        <span class="name">{{item.Name}}</span></div>
+                                    </div>
+                                    <div class="validity">
+                                        <span>{{item.BeginDate}}-{{item.EndDate}}
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </li>
+                        </li>
+                    </van-list>
                 </ul>
             </van-tab>
             <van-tab title="已过期">
                 <ul class="gray" >
-                    <li class="couponitem">
-                        <div class="couponTop">
-                            <div class="cpnamount">
-                                <div class="amountWrap">
-                                    <div class="amount">
-                                            <span class="amountSign">¥</span><span class="amountNum">60</span><!--Regular if10-->                    
+                    
+                    <van-list
+                            v-model="endLoading"
+                            :finished="endFinished"
+                            @load="onLoadEnd"
+                            >
+                        <li  v-for="(item,index) in endList" :key="index" class="couponitem">
+                            <div class="couponTop">
+                                <div class="cpnamount">
+                                    <div class="amountWrap">
+                                        <div class="amount">
+                                                <span class="amountSign" v-if="item.SignPosition=='left'" >{{item.Sign}}</span>
+                                                <span class="amountNum">{{item.Coupon}}</span>
+                                                <span class="amountSign" v-if="item.SignPosition=='right'" >{{item.Sign}}</span>                   
+                                        </div>
+                                        <div class="condition">
+                                            <span>{{item.Condition}}</span>
+                                        </div>
                                     </div>
-                                    <div class="condition">
-                                        <span>无金额门槛</span>
+                                </div>
+                                <div class="couponInfoWrap">
+                                    <div class="cpninfo">
+                                        <div class="detail">
+                                        <span class="name">{{item.Name}}</span></div>
+                                    </div>
+                                    <div class="validity">
+                                        <span>{{item.BeginDate}}-{{item.EndDate}}
+                                        </span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="couponInfoWrap">
-                                <div class="cpninfo">
-                                    <div class="detail">
-                                    <span class="name">购物车专享优惠券60</span></div>
-                                </div>
-                                <div class="validity">
-                                    <span>2018.09.05-2018.09.28</span>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
+                        </li>
+                    </van-list>
                 </ul>
             </van-tab>
         </van-tabs>
@@ -144,16 +137,96 @@
 </template>
 
 <script>
+import { GetCoupon,ExchangeCoupon } from "../../../api/user.js";
+
 export default {
   components: {
   },
   data() {
     return {
+            loading:false,
+            finished:false,
+            list:[],
+            page:0,
+
+            
+            useLoading:false,
+            useFinished:false,
+            useList:[],
+            usePage:0,
+
+            
+            endLoading:false,
+            endFinished:false,
+            endList:[],
+            endPage:0,
+
+            couponCode:'',
+            exchangeLoading:false,
     };
   },
   computed: {
   },
   methods: {
+        onLoad() {
+            this.page++;
+            GetCoupon({page:this.page}).then(response=>{
+                response.List.forEach(item => {
+                    item.show=false;
+                    this.list.push(item);
+                });
+                this.loading = false;
+                if(response.TotalPage<=this.page){
+                    this.finished = true;
+                }
+            
+            })
+        },
+        onShowInfo(id,index){
+            this.list.forEach((item,itemIndex) => {
+                if(index==itemIndex){
+                    item.show=!item.show;
+                    return;
+                }
+            });
+        },
+        onLoadUse() {
+            this.usePage++;
+            GetCoupon({page:this.usePage}).then(response=>{
+                response.List.forEach(item => {
+                    this.useList.push(item);
+                });
+                this.useLoading = false;
+                if(response.TotalPage<=this.usePage){
+                    this.useFinished = true;
+                }
+            
+            })
+        },
+        onLoadEnd() {
+            this.endPage++;
+            GetCoupon({page:this.endPage}).then(response=>{
+                response.List.forEach(item => {
+                    this.endList.push(item);
+                });
+                this.endLoading = false;
+                if(response.TotalPage<=this.endPage){
+                    this.endFinished = true;
+                }
+            
+            })
+        },
+        onExchange(){
+            if(this.exchangeLoading){
+                return;
+            }
+            this.exchangeLoading=true;
+            ExchangeCoupon(this.couponCode).then(response=>{
+                this.$toast('兑换成功'); 
+                this.exchangeLoading=false;
+                this.$router.go(0); 
+            })
+        }
   }
 };
 </script>

@@ -24,7 +24,6 @@ export default {
         return{
             loading:false,
             finished:false,
-            data:{},
             list:[],
             page:0,
         }
