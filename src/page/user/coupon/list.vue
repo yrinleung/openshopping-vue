@@ -29,14 +29,12 @@
                                 <div class="cpninfo">
                                     <div class="detail">
                                     <span class="name">购物车专享优惠券60</span></div>
-                                        <div class="validity">
-                                            <span>2018.09.05-2018.09.28
-                                                <van-button type="danger" size="mini">立即使用</van-button>
-                                            </span>
-                                        </div>
-                                        
-                                    
                                 </div>
+                                <div class="validity">
+                                    <span>2018.09.05-2018.09.28
+                                    </span>
+                                </div>
+                                <van-button type="danger" size="mini">立即使用</van-button>
                             </div>
                         </div>
                         <div class="couponMid ">
@@ -66,14 +64,12 @@
                                 <div class="cpninfo">
                                     <div class="detail">
                                     <span class="name">购物车专享优惠券60</span></div>
-                                        <div class="validity">
-                                            <span>2018.09.05-2018.09.28
-                                                <van-button type="danger" size="mini">立即使用</van-button>
-                                            </span>
-                                        </div>
-                                        
-                                    
                                 </div>
+                                 <div class="validity">
+                                    <span>2018.09.05-2018.09.28
+                                    </span>
+                                </div>
+                                <van-button type="danger" size="mini">立即使用</van-button>
                             </div>
                         </div>
                         <div class="couponMid ">
@@ -107,16 +103,11 @@
                                 <div class="cpninfo">
                                     <div class="detail">
                                     <span class="name">购物车专享优惠券60</span></div>
+                                </div>
                                         <div class="validity">
                                             <span>2018.09.05-2018.09.28</span>
                                         </div>
-                                        
-                                    
-                                </div>
                             </div>
-                        </div>
-                        <div class="couponMid ">
-                            <span>指定商品适用</span>
                         </div>
                     </li>
                 </ul>
@@ -139,16 +130,11 @@
                                 <div class="cpninfo">
                                     <div class="detail">
                                     <span class="name">购物车专享优惠券60</span></div>
-                                        <div class="validity">
-                                            <span>2018.09.05-2018.09.28</span>
-                                        </div>
-                                        
-                                    
+                                </div>
+                                <div class="validity">
+                                    <span>2018.09.05-2018.09.28</span>
                                 </div>
                             </div>
-                        </div>
-                        <div class="couponMid ">
-                            <span>指定商品适用</span>
                         </div>
                     </li>
                 </ul>
@@ -219,7 +205,7 @@ export default {
     height: 90px;
     .cpninfo {
       position: absolute;
-      top: 50%;
+      top: 26px;
       -webkit-transform: translate(0, -50%);
       transform: translate(0, -50%);
       width: 100%;
@@ -231,9 +217,16 @@ export default {
           color: #000;
         }
       }
-      .validity {
+    }
+    .validity {
+        position: absolute;
+        bottom: 16px;
         font-size: 10px;
-      }
+    }
+    button{
+        right: 16px;
+        position: absolute;
+        bottom: 16px;
     }
   }
   .couponMid {
